@@ -13,6 +13,18 @@
 </head>
 
 <body>
+    @if(count($errors))
+        <div class="form-group">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+    
     <form id="add_word" class="grid-x" action="/add" autocomplete="off" enctype="text/plain" method="get" name="add_word" target="_blank">
         <div class="cell small-12 parameter default" data-parameter-name="word">
             <input type="text" id="word_text" name="word" placeholder="Word" autocomplete="off" autofocus />

@@ -9,6 +9,8 @@ use App\Translates;
 use App\AddParams;
 use App\WordTypes;
 
+use App\Http\Requests\CreateWordRequest;
+
 class WordsController extends Controller
 {
     public function index()
@@ -59,5 +61,13 @@ class WordsController extends Controller
         //$translates = $word->translates;
         //dd($translates);
         //return view('list', compact('words'));
+    }
+
+    public function store(CreateWordRequest $request)
+    {
+        $validatedData = $request->validated();
+        
+        return self::add($validatedData);
+        //return response()->json('Form is successfully validated and data has been saved');
     }
 }
