@@ -9,9 +9,9 @@ class Words extends Model
 	protected $table = 'words';
     protected $fillable = ['word'];
 
-    public static function addWord($params) {
-        $result = self::firstOrCreate(array('word' => $params['word']));
-
+    public static function add($params) {
+        return self::firstOrCreate(array('word' => $params['word']));
+        /*
         if (!$result->wasRecentlyCreated) {
             $duplicates = self::getDuplicates($params['word']);
             return [
@@ -21,7 +21,9 @@ class Words extends Model
         }
         else {
             return ['result' => 'success'];
+
         }
+        */
     }
 
     public static function getDuplicates($word) {
@@ -30,5 +32,13 @@ class Words extends Model
 
     public function translates() {
         return $this->belongsToMany('App\Translates', 'words_translates', 'word_id', 'translate_id');
+    }
+
+    public function addParams() {
+        return $this->hasOne('App\AddParams', 'word_id');
+    }
+
+    public function wordTypes() {
+        return $this->belongsTo('App\WordTypes', 'word_type_id');
     }
 }

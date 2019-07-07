@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTranslatesTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTranslatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('translates', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('translate');
-            $table->timestamps();
+            $table->string('url');
+            $table->string('thumbnail_url');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateTranslatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('translates');
+        Schema::dropIfExists('images');
     }
 }

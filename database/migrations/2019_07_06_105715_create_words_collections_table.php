@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWordsTranslatesTable extends Migration
+class CreateWordsCollectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,23 @@ class CreateWordsTranslatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('words_translates', function (Blueprint $table) {
+        Schema::create('words_collections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('word_id');
-            $table->unsignedBigInteger('translate_id');
-            $table->timestamps();
+            $table->unsignedBigInteger('collection_id');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('word_id')
                   ->references('id')->on('words')
                   ->onDelete('cascade');
                   
-            $table->foreign('translate_id')
-                  ->references('id')->on('translates')
+            $table->foreign('collection_id')
+                  ->references('id')->on('collections')
                   ->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -36,6 +38,6 @@ class CreateWordsTranslatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('words_translates');
+        Schema::dropIfExists('words_collections');
     }
 }
