@@ -136,6 +136,20 @@
                 <input type="text" name="partizip" placeholder="Partizip II">
             </div>
         </fieldset>
+        <div class="cell small-6 parameter hide" data-parameter-name="reflexive">
+            <div class="label-button">
+                <input type="checkbox" name="labels[]" id="reflexive" value="moebel">
+                <label for="reflexive">moebel</label>
+            </div>
+            <div class="label-button">
+                <input type="checkbox" name="labels[]" id="reflexive" value="haus">
+                <label for="reflexive">haus</label>
+            </div>
+            <div class="label-button">
+                <input type="checkbox" name="labels[]" id="reflexive" value="verbs">
+                <label for="reflexive">verbs</label>
+            </div>
+        </div>
         <div class="cell small-12 parameter default" data-parameter-name="add_tag">
             <fieldset class="ajax-form" id="add_tag" data-action="/add_label.php" data-method="get" data-enctype="text/plain">
                 <div class="input-group">
