@@ -125,7 +125,8 @@ class CreateWordRequest extends FormRequest
 
             'picture' => [
                 'nullable',
-                'url',
+                //'url',
+                'regex:/^(http)(s?)(:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
                 'max:200'
             ],
 

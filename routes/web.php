@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/','WordsController@index');
-Route::get('/list','WordsController@list');
-Route::get('/add', ['as' => 'query', 'uses' => 'WordsController@store']);
+Route::get('/', 'WordsController@index');
+Route::get('/list', 'WordsController@list');
+Route::get('/add', 'WordsController@store');
 //Route::get('/translate/{word}','WordsController@translate');
 //Route::get('/add_translate/{word}/{translate}','WordsController@addTranslate');

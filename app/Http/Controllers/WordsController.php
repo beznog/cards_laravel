@@ -10,6 +10,7 @@ use App\AddParams;
 use App\WordTypes;
 
 use App\Http\Requests\CreateWordRequest;
+use App\Services\CreateWordService;
 
 class WordsController extends Controller
 {
@@ -18,29 +19,13 @@ class WordsController extends Controller
         return view('main');
     }
 
-    public function add()
-    {
-        $params = Input::all();
-        $word = Words::add($params);
-        $translate = Translates::add($params);
-        $word->translates()->save($translate);
-        $addParams = new AddParams($params);
-        $word->addParams()->save($addParams);
-        $wordType = WordTypes::where('word_type', $params['word_type'])->first();
-        $wordType->words()->save($word);
-        
-        //$wordType->words()->save();
-        //dd($word);
-        return $word;
-    }
-
     public function list()
     {
         $words = Words::get();
         return view('list', compact('words'));
     }
 
-        public function translate($word)
+    public function translate($word)
     {
         $word = Words::where('word', $word)->get()->first();
         $translates = $word->translates;
@@ -48,6 +33,7 @@ class WordsController extends Controller
         //return view('list', compact('words'));
     }
     
+    /*
     public function addTranslate($word, $translate)
     {
         $word = Words::where('word', $word)->get()->first();
@@ -62,12 +48,10 @@ class WordsController extends Controller
         //dd($translates);
         //return view('list', compact('words'));
     }
+    */
 
     public function store(CreateWordRequest $request)
     {
-        $validatedData = $request->validated();
-        
-        return self::add($validatedData);
-        //return response()->json('Form is successfully validated and data has been saved');
+        return CreateWordService::store($request);
     }
 }
