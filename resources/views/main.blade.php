@@ -27,7 +27,7 @@
     
     <form id="add_word" class="grid-x" action="/add" autocomplete="off" enctype="text/plain" method="get" name="add_word" target="_blank">
         <div class="cell small-12 parameter default" data-parameter-name="word">
-            <input type="text" id="word_text" name="word" placeholder="Word" autocomplete="off" autofocus />
+            <input type="text" id="morpheme_text" name="morpheme" placeholder="Word" autocomplete="off" autofocus />
         </div>
         <div class="cell small-12 parameter default" data-parameter-name="translate">
             <input type="text" name="translate" placeholder="Translation" autocomplete="off" />

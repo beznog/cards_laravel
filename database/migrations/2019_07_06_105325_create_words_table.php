@@ -15,7 +15,7 @@ class CreateWordsTable extends Migration
     {
         Schema::create('words', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('word');
+            $table->bigInteger('morpheme_id')->unsigned()->index()->nullable()->default(NULL);
             $table->bigInteger('word_type_id')->unsigned()->index()->nullable()->default(NULL);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
@@ -25,6 +25,9 @@ class CreateWordsTable extends Migration
               ->references('id')->on('word_types')
               ->onDelete('cascade');
 
+            $table->foreign('morpheme_id')
+              ->references('id')->on('morphemes')
+              ->onDelete('cascade');
         });
 
 

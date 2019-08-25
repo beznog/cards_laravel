@@ -7,7 +7,7 @@
         <ul>
             @foreach ($words as $word)
                 <li>
-                    {{ $word->word }}
+                    {{ $word->morpheme_id }}
                 </li>
             @endforeach
         </ul>

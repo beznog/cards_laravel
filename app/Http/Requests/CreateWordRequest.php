@@ -25,7 +25,7 @@ class CreateWordRequest extends FormRequest
     public function rules()
     {
         return [
-            'word' => [
+            'morpheme' => [
                 'required_without:translate',
                 'nullable',
                 'regex:/^([a-zA-ZÜüÖöÄäß,()\s]*)$/',
@@ -33,7 +33,7 @@ class CreateWordRequest extends FormRequest
             ],
 
             'translate' => [
-                'required_without:word',
+                'required_without:morpheme',
                 'nullable',
                 'regex:/^([а-яА-ЯёЁ,()\s]*)$/u',
                 'max:100'
@@ -159,7 +159,7 @@ class CreateWordRequest extends FormRequest
     public function messages()
     {
         return [
-            'word' => 'A word is required',
+            'morpheme' => 'A word is required',
             'translate'  => 'A translate is required'
         ];
     }

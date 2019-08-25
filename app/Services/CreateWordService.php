@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Http\Request;
 
 use App\Words;
+use App\Morphemes;
 use App\Translates;
 use App\AddParams;
 use App\WordTypes;
@@ -15,9 +16,9 @@ class CreateWordService
 {
 	public static function store(CreateWordRequest $request)
     {
+        // TODO !!!
     	$validatedData = self::validate($request);
-        //dd($validatedData);
-        $duplicateWords = self::getDuplicates($validatedData['word']);
+        $duplicateWords = self::getDuplicates($validatedData['morpheme']);
         if (!empty($duplicateWords)) {
             dd($duplicateWords);
         }
@@ -31,18 +32,21 @@ class CreateWordService
 
     public static function getDuplicates($morpheme)
     {
-        $duplicateMorphemes = Words::getDuplicates($morpheme);
-        $duplicateWords = array();
-        foreach ($duplicateMorphemes as $duplicateMorpheme) {
-            array_push($duplicateWords, self::getFullWord($duplicateMorpheme));
+        // TODO !!!!!!
+        $morpheme = Morphemes::get($morpheme);
+        $duplicateWords = $morpheme->words;
+        foreach ($duplicateWords as $duplicateWord) {
+            // TODO !!!
+            //array_push($duplicateWords, self::getFullWord($duplicateMorpheme));
         }
         return $duplicateWords;
     }
 
     public static function getFullWord(Words $morpheme)
     {
+        // TODO !!!!!
         $word = array();
-        $word['word'] = $morpheme->word;
+        $word['morpheme'] = $morpheme->word;
         $word['translate'] = $morpheme->translates;
         $word['addParams'] = $morpheme->addParams;
         $word['wordType'] = $morpheme->wordTypes;
@@ -50,15 +54,19 @@ class CreateWordService
     }
 
     public static function save($params) {
-        if (!empty($params['word'])) {
-            $word = Words::add($params);
+        // TODO !!!!
+        $word = new Words();
+
+        if (!empty($params['morpheme'])) {
+            $morpheme = Morphemes::add($params);
+            $morpheme->words()->save($word);
         }
 
         if (!empty($params['translate'])) {
             $translate = Translates::add($params);
         }
         
-        if (!empty($params['word']) && !empty($params['translate'])) {
+        if (!empty($params['morpheme']) && !empty($params['translate'])) {
             $word->translates()->save($translate);
             $addParams = new AddParams($params);
             $word->addParams()->save($addParams);

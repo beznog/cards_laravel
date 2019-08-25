@@ -7,14 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Words extends Model
 {
 	protected $table = 'words';
-    protected $fillable = ['word'];
 
-    public static function add($params) {
-        return self::firstOrCreate(array('word' => $params['word']));
-    }
-
-    public static function getDuplicates($word) {
-        return self::where('word', $word)->take(10)->get();
+    public function morphemes() {
+        return $this->belongsTo('App\Morphemes', 'morpheme_id');
     }
 
     public function translates() {

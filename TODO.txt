@@ -1,0 +1,40 @@
+Бизнес логика:
+- Создать слово
+	-- Получить полное слово
+	-- Получить параметры для автозаполнения с translate (перевод, род, мн. форма, формы глагола и тд.)
+	-- Получение картинок по слову от google API
+	-- Автозаполнения формы
+	-- Валидация формы (в т.ч. проверка на дубли)
+	-- Сохранение всех значений в разных таблицах
+
+- Создать коллекцию слов
+- Отобразить список слов
+	-- Получить список слов по условию (в т.ч. всех слов)
+	-- Создать слайдер
+	-- Автозаполнить карточки слайдера
+- Изменить слово
+- Удалить слово
+
+
+Нужно создавать модель Words!!!! и из нее собирать все дочерние модели типа морфемы, переводов и тд.
+
+Идея для структуры БД:
+таблицы:
+	morphemes
+	translates
+	add_parameters (нужна ли ???)
+	word_types
+	images
+	collections
+
+	words(!!!): word_id (это уже слово со смыслом и переводом), morpheme_id (это просто слово пока без смысла, может означать что угодно), word_type_id, article_type, plural, reflexive, preposition, modal_verb, regularity, prasens, prateritum, partizip, importance, complexity, knowledge, examples, created_at, updated_at
+
+
+	words_translates
+	words_images
+	words_collections
+	collections_images (на будущее)
+
+	users
+	password_resets
+	migrations

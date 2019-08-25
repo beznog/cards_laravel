@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Words;
+use App\Morphemes;
 use App\Translates;
 use App\AddParams;
 use App\WordTypes;
@@ -25,13 +26,13 @@ class WordsController extends Controller
         return view('list', compact('words'));
     }
 
-    public function translate($word)
-    {
-        $word = Words::where('word', $word)->get()->first();
-        $translates = $word->translates;
-        dd($translates);
-        //return view('list', compact('words'));
-    }
+    // public function translate($word)
+    // {
+    //     $word = Words::where('word', $word)->get()->first();
+    //     $translates = $word->translates;
+    //     dd($translates);
+    //     //return view('list', compact('words'));
+    // }
     
     /*
     public function addTranslate($word, $translate)
