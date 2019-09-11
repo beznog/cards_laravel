@@ -9,7 +9,7 @@ class Morphemes extends Model
 	protected $table = 'morphemes';
     protected $fillable = ['morpheme'];
 
-    public static function get($morpheme) {
+    public static function find($morpheme) {
         return self::where('morpheme', $morpheme)->take(10)->first();
     }
 
@@ -18,6 +18,6 @@ class Morphemes extends Model
     }
 
     public function words() {
-        return $this->hasOne('App\Words', 'morpheme_id');
+        return $this->hasMany('App\Words', 'morpheme_id');
     }
 }

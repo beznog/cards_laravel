@@ -20,7 +20,7 @@ class CreateWordService
     	$validatedData = self::validate($request);
         $duplicateWords = self::getDuplicates($validatedData['morpheme']);
         if (!empty($duplicateWords)) {
-            dd($duplicateWords);
+            return json_encode($duplicateWords);
         }
         return self::save($validatedData);
     }
@@ -33,25 +33,20 @@ class CreateWordService
     public static function getDuplicates($morpheme)
     {
         // TODO !!!!!!
-        $morpheme = Morphemes::get($morpheme);
-        $duplicateWords = $morpheme->words;
-        foreach ($duplicateWords as $duplicateWord) {
-            // TODO !!!
-            //array_push($duplicateWords, self::getFullWord($duplicateMorpheme));
+        $morpheme = Morphemes::find($morpheme);
+        if (!empty($morpheme)) {
+            $duplicateWords = $morpheme->words;
+            //dd($duplicateWords);
+            $duplicateWordsInTextForm = array();
+            foreach ($duplicateWords as $duplicateWord) {
+                // TODO !!!
+                array_push($duplicateWordsInTextForm, $duplicateWord->getInTextForm());
+            }
+            return $duplicateWordsInTextForm;
         }
-        return $duplicateWords;
+        return [];
     }
 
-    public static function getFullWord(Words $morpheme)
-    {
-        // TODO !!!!!
-        $word = array();
-        $word['morpheme'] = $morpheme->word;
-        $word['translate'] = $morpheme->translates;
-        $word['addParams'] = $morpheme->addParams;
-        $word['wordType'] = $morpheme->wordTypes;
-        return $word;
-    }
 
     public static function save($params) {
         // TODO !!!!
