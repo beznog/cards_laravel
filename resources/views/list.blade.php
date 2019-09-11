@@ -7,7 +7,10 @@
         <ul>
             @foreach ($words as $word)
                 <li>
-                    {{ $word->morpheme_id }}
+                    {{ $word->morphemes['morpheme'] }} - 
+                    @foreach ($word->translates as $translate)
+                        {{ $translate->translate }}
+                    @endforeach
                 </li>
             @endforeach
         </ul>

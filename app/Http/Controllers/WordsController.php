@@ -22,7 +22,10 @@ class WordsController extends Controller
 
     public function list()
     {
-        $words = Words::get();
+        //$words = Words::get();
+        //$morphemes = Morphemes::get();
+        $words = Words::with('morphemes', 'translates', 'wordTypes', 'addParams')->get();
+        //dd($words);
         return view('list', compact('words'));
     }
 
