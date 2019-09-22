@@ -58,4 +58,10 @@ class WordsController extends Controller
     {
         return CreateWordService::store($request);
     }
+
+    public function edit($word)
+    {
+        $word = Words::where('id', $word)->with('morphemes', 'translates', 'wordTypes', 'addParams')->get()->first();
+        return view('edit', compact('word'));
+    }
 }

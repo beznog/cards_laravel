@@ -1,0 +1,7 @@
+composer require "laravelcollective/html":"^5.2.0"
+composer remove illuminate/html
+
+
+php artisan migrate:refresh
+php artisan serve
+
