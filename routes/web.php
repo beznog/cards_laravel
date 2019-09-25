@@ -17,3 +17,6 @@ Route::get('/add', 'WordsController@store');
 Route::get('/edit/{word}', 'WordsController@edit');
 //Route::get('/translate/{word}','WordsController@translate');
 //Route::get('/add_translate/{word}/{translate}','WordsController@addTranslate');
+Route::get('/helper-test', function () {
+    return LingvoAPI::test();
+});
