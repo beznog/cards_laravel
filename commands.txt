@@ -1,6 +1,6 @@
 composer require "laravelcollective/html":"^5.2.0"
 composer remove illuminate/html
-
+composer require symfony/psr-http-message-bridge
 
 php artisan migrate:refresh
 php artisan serve

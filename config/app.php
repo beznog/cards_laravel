@@ -230,6 +230,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'LingvoAPI' => App\Helpers\APIHelpers\LingvoAPI::class,
+        'GoogleSearchAPI' => App\Helpers\APIHelpers\GoogleSearchAPI::class,
 
     ],
 
