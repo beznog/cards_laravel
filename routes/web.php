@@ -17,10 +17,11 @@ Route::get('/add', 'WordsController@store');
 Route::get('/edit/{word}', 'WordsController@edit');
 //Route::get('/translate/{word}','WordsController@translate');
 //Route::get('/add_translate/{word}/{translate}','WordsController@addTranslate');
-Route::get('/lingvo-test', function () {
-    return LingvoAPI::get_full_words("tisc", 1031, 1049, 10, LingvoAPI::get_token());
+
+Route::get('api_services/lingvo/get_full_words/{word}', function ($word) {
+    return LingvoAPI::getFullWords($word, 1031, 1049, 10, LingvoAPI::getToken());
 });
 
-Route::get('/google-search-test', function () {
-    return GoogleSearchAPI::getPictures("tisch", 4, GoogleSearchAPI::$serverKey, GoogleSearchAPI::$searchId);
+Route::get('api_services/google_search/{word}', function ($word) {
+    return GoogleSearchAPI::getPictures($word, 4, GoogleSearchAPI::$serverKey, GoogleSearchAPI::$searchId);
 });
