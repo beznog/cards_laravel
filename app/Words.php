@@ -15,7 +15,8 @@ class Words extends Model
             'morpheme' => $this->morphemes->morpheme,
             'translate' => $this->translates->pluck('translate')->all(),
             'wordType' => $this->wordTypes->word_type,
-            'addParams' => $this->addParams->attributes
+            'addParams' => $this->addParams->attributes,
+            'images' => $this->images->attributes,
         ];
     }
 

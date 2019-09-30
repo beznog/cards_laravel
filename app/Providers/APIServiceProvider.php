@@ -14,6 +14,7 @@ class APIServiceProvider extends ServiceProvider
     public function register()
     {
         require_once app_path() . '/Helpers/APIHelpers/LingvoAPI.php';
+        require_once app_path() . '/Helpers/APIHelpers/GoogleSearchAPI.php';
     }
 
     /**

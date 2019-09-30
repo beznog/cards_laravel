@@ -1,4 +1,17 @@
-{{ Form::open(['id' => 'add_word', 'class' => 'grid-x', 'autocomplete' => 'off', 'enctype' => 'text/plain', 'name' => 'add_word', 'target' => '_blank']) }}
+@if(count($errors))
+    <div class="form-group">
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endif
+
+
+{!! Form::open(['url' => '/add', 'id' => 'add_word', 'class' => 'grid-x', 'autocomplete' => 'off', 'name' => 'add_word', 'target' => '_blank']) !!}
 
 <div class="cell small-12 parameter default" data-parameter-name="word">
 {{ Form::text(
@@ -13,10 +26,10 @@
 </div>
 <div class="cell small-12 parameter default" data-parameter-name="translate">
 {{ Form::text(
-        'translation', 
+        'translate', 
         $value = (isset($word->translation)) ? $word->translation : '', 
         $attributes = array(
-            'id'=>'translation_text', 
+            'id'=>'translate_text', 
             'placeholder'=>'Translation', 
             'autocomplete'=>'off'
         )

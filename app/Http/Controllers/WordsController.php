@@ -10,8 +10,12 @@ use App\Translates;
 use App\AddParams;
 use App\WordTypes;
 
-use App\Http\Requests\CreateWordRequest;
+
+
 use App\Services\CreateWordService;
+use App\Services\EditWordService;
+
+use App\Http\Requests\CreateWordRequest;
 
 class WordsController extends Controller
 {
@@ -28,15 +32,15 @@ class WordsController extends Controller
         //dd($words);
         return view('list', compact('words'));
     }
-
-    // public function translate($word)
-    // {
-    //     $word = Words::where('word', $word)->get()->first();
-    //     $translates = $word->translates;
-    //     dd($translates);
-    //     //return view('list', compact('words'));
-    // }
-    
+    /*
+    public function translate($word)
+    {
+        $word = Words::where('word', $word)->get()->first();
+        $translates = $word->translates;
+        dd($translates);
+        return view('list', compact('words'));
+    }
+    */
     /*
     public function addTranslate($word, $translate)
     {
@@ -59,9 +63,14 @@ class WordsController extends Controller
         return CreateWordService::store($request);
     }
 
-    public function edit($word)
+    public function autocompleteEditForm($wordId)
     {
-        $word = Words::where('id', $word)->with('morphemes', 'translates', 'wordTypes', 'addParams')->get()->first();
-        return view('edit', compact('word'));
+        $word = EditWordService::getWordToFillForm($wordId);
+        $pictures = EditWordService::getPicturesToWord($word->morphemes['morpheme']);
+        return view('edit', compact('word', 'pictures'));
+    }
+
+    public function edit(CreateWordRequest $request) {
+        return EditWordService::edit($request);
     }
 }
