@@ -24,9 +24,9 @@ class EditWordService
     {
         //return Words::where('id', $wordId)->with('morphemes', 'translates', 'wordTypes', 'addParams', 'images')->get()->first();
         $word = Words::where('id', $wordId)->get()->first();
-        //dd($word);
         $word = $word->getInTextForm();
-        dd($word);    
+        //dd($word);
+        return $word;
     }
 
     public static function getPicturesToWord($word)

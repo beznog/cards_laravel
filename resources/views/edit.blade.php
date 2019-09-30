@@ -16,8 +16,6 @@
 		    </div>
 		@endif
 
-        {{ $word }}
-
         @include('elements.form_create_word')
     </body>
 </html>

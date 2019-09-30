@@ -16,7 +16,7 @@
 <div class="cell small-12 parameter default" data-parameter-name="word">
 {{ Form::text(
         'morpheme', 
-        $value = (isset($word->morpheme)) ? $word->morpheme : '', 
+        $value = (isset($word['morpheme'])) ? $word['morpheme'] : '', 
         $attributes = array(
             'id'=>'morpheme_text', 
             'placeholder'=>'Word', 
@@ -27,7 +27,7 @@
 <div class="cell small-12 parameter default" data-parameter-name="translate">
 {{ Form::text(
         'translate', 
-        $value = (isset($word->translation)) ? $word->translation : '', 
+        $value = (isset($word['translate'])) ? implode(', ', $word['translate']) : '', 
         $attributes = array(
             'id'=>'translate_text', 
             'placeholder'=>'Translation', 
@@ -41,7 +41,7 @@
         {{ Form::radio(
                 'word_type', 
                 'noun',
-                (isset($word->word_type) && $word->word_type === 'noun') ? true : false, 
+                (isset($word['wordType']) && $word['wordType'] == 'noun') ? true : false, 
                 $attributes = array(
                     'id'=>'word_type_noun', 
                     'data-next-params'=>'article_type'
@@ -53,7 +53,7 @@
         {{ Form::radio(
                 'word_type', 
                 'verb',
-                (isset($word->word_type) && $word->word_type === 'verb') ? true : false, 
+                (isset($word['wordType']) && $word['wordType'] == 'verb') ? true : false, 
                 $attributes = array(
                     'id'=>'word_type_verb', 
                     'data-next-params'=>'article_type' 
@@ -65,7 +65,7 @@
         {{ Form::radio(
                 'word_type', 
                 'adjective',
-                (isset($word->word_type) && $word->word_type === 'adjective') ? true : false, 
+                (isset($word['wordType']) && $word['wordType'] == 'adjective') ? true : false, 
                 $attributes = array(
                     'id'=>'word_type_adjective', 
                     'data-next-params'=>'article_type' 
@@ -77,7 +77,7 @@
         {{ Form::radio(
                 'word_type', 
                 'other',
-                (isset($word->word_type) && $word->word_type === 'other') ? true : false, 
+                (isset($word['wordType']) && $word['wordType'] == 'other') ? true : false, 
                 $attributes = array(
                     'id'=>'word_type_other', 
                     'data-next-params'=>'article_type' 
@@ -92,7 +92,7 @@
         {{ Form::radio(
                 'article_type', 
                 'der',
-                (isset($word->article_type) && $word->article_type === 'der') ? true : false,
+                (isset($word['addParams']['article_type']) && $word['addParams']['article_type'] === 'der') ? true : false,
                 $attributes = array(
                     'id'=>'article_type_der', 
                     'data-next-params'=>'plural' 
@@ -104,7 +104,7 @@
         {{ Form::radio(
                 'article_type', 
                 'die',
-                (isset($word->article_type) && $word->article_type === 'die') ? true : false, 
+                (isset($word['addParams']['article_type']) && $word['addParams']['article_type'] === 'die') ? true : false, 
                 $attributes = array(
                     'id'=>'article_type_die', 
                     'data-next-params'=>'plural' 
@@ -116,7 +116,7 @@
         {{ Form::radio(
                 'article_type', 
                 'das',
-                (isset($word->article_type) && $word->article_type === 'das') ? true : false,
+                (isset($word['addParams']['article_type']) && $word['addParams']['article_type'] === 'das') ? true : false,
                 $attributes = array(
                     'id'=>'article_type_das', 
                     'data-next-params'=>'plural' 
@@ -128,7 +128,7 @@
         {{ Form::radio(
                 'article_type', 
                 'die_plural',
-                (isset($word->article_type) && $word->article_type === 'die_plural') ? true : false, 
+                (isset($word['addParams']['article_type']) && $word['addParams']['article_type'] === 'die_plural') ? true : false, 
                 $attributes = array(
                     'id'=>'article_type_die_plural', 
                     'data-next-params'=>'plural' 
@@ -141,7 +141,7 @@
 <div class="cell small-12 parameter hide" data-parameter-name="plural">
 {{ Form::text(
         'plural', 
-        $value = (isset($word->plural)) ? $word->plural : '', 
+        $value = (isset($word['addParams']['plural'])) ? $word['addParams']['plural'] : '', 
         $attributes = array(
             'id'=>'plural_text', 
             'placeholder'=>'Plural Form', 
@@ -155,7 +155,7 @@
     {{ Form::checkbox(
             'reflexive', 
             '1',
-            (isset($word->reflexive)) ? true : false, 
+            (isset($word['addParams']['reflexive'])) ? true : false, 
             $attributes = array(
                 'id'=>'reflexive'
             )
@@ -164,24 +164,24 @@
     </div>
 </div>
 
-<div class="cell small-6 parameter hide" data-parameter-name="preposition">
+<div class="cell small-6 parameter hide" data-parameter-name="preposition_verb">
     <div class="label-button">
     {{ Form::checkbox(
-            'preposition', 
+            'preposition_verb', 
             '1',
-            (isset($word->preposition)) ? true : false, 
+            (isset($word['addParams']['preposition'])) ? true : false, 
             $attributes = array(
-                'id'=>'preposition',
-                'data-next-params'=>'preposition_verb'
+                'id'=>'preposition_verb',
+                'data-next-params'=>'preposition'
             )
     )}}
-    {{ Form::label('preposition', 'V + preposition') }}
+    {{ Form::label('preposition_verb', 'V + preposition') }}
     </div>
 </div>
 
-<div class="cell small-12 parameter hide" data-parameter-name="preposition_verb">
+<div class="cell small-12 parameter hide" data-parameter-name="preposition">
     {{ Form::select(
-            'preposition_verb', 
+            'preposition', 
             [
                 'Von+Dativ' => 'Von + Dativ', 
                 'Auf+Akkusativ' => 'Auf + Akkusativ',
@@ -200,8 +200,8 @@
                 'In+Dativ' => 'In + Dativ',
                 'Als+Nominativ' => 'Als + Nominativ'
             ], 
-            (isset($word->preposition)) ? $word->preposition : null,
-            (isset($word->preposition)) ? null : ['placeholder' => 'Preposition']
+            (isset($word['addParams']['preposition'])) ? $word['addParams']['preposition'] : null,
+            (isset($word['addParams']['preposition'])) ? [] : ['placeholder' => 'Preposition']
     )}}
 </div>
 
@@ -210,7 +210,7 @@
     {{ Form::radio(
             'modal_verb', 
             'haben',
-            (isset($word->modal_verb) && $word->modal_verb === 'haben') ? true : false, 
+            (isset($word['addParams']['modal_verb']) && $word['addParams']['modal_verb'] === 'haben') ? true : false, 
             $attributes = array(
                 'id'=>'modal_verb_haben'
             )
@@ -221,7 +221,7 @@
     {{ Form::radio(
             'modal_verb', 
             'sein',
-            (isset($word->modal_verb) && $word->modal_verb === 'sein') ? true : false, 
+            (isset($word['addParams']['modal_verb']) && $word['addParams']['modal_verb'] === 'sein') ? true : false, 
             $attributes = array(
                 'id'=>'modal_verb_sein'
             )
@@ -235,7 +235,7 @@
     {{ Form::radio(
             'regularity', 
             'regular',
-            (isset($word->regularity) && $word->regularity === true) ? true : false, 
+            (isset($word['addParams']['regularity']) && $word['addParams']['regularity'] == 'regular') ? true : false, 
             $attributes = array(
                 'id'=>'regularity_regular'
             )
@@ -246,7 +246,7 @@
     {{ Form::radio(
             'regularity', 
             'irregular',
-            (isset($word->regularity) && $word->regularity === false) ? true : false, 
+            (isset($word['addParams']['regularity']) && $word['addParams']['regularity'] == 'irregular') ? true : false, 
             $attributes = array(
                 'id'=>'regularity_irregural',
                 'data-next-params'=>'irregurality_forms'
@@ -260,7 +260,7 @@
     <div class="cell small-12">
     {{ Form::text(
             'prasens', 
-            $value = (isset($word->prasens)) ? $word->prasens : '', 
+            $value = (isset($word['addParams']['prasens'])) ? $word['addParams']['prasens'] : '', 
             $attributes = array(
                 'placeholder'=>'Prasens'
             )
@@ -269,7 +269,7 @@
     <div class="cell small-12">
     {{ Form::text(
             'prateritum', 
-            $value = (isset($word->prateritum)) ? $word->prateritum : '',
+            $value = (isset($word['addParams']['prateritum'])) ? $word['addParams']['prateritum'] : '',
             $attributes = array(
                 'placeholder'=>'Prateritum'
             )
@@ -278,7 +278,7 @@
     <div class="cell small-12">
     {{ Form::text(
             'partizip', 
-            $value = (isset($word->partizip)) ? $word->partizip : '',
+            $value = (isset($word['addParams']['partizip'])) ? $word['addParams']['partizip'] : '',
             $attributes = array(
                 'placeholder'=>'Partizip II'
             )
@@ -287,18 +287,18 @@
 </fieldset>
 
 <div class="cell small-6 parameter hide" data-parameter-name="collections">
-@isset($word->labels)
-    @foreach ($word->labels as $label)
+@isset($word['collections'])
+    @foreach ($word['collections'] as $collection)
     	<div class="label-button">
     	{{ Form::checkbox(
         	    'collections[]', 
-            	$label,
+            	$collection,
             	false, 
             	$attributes = array(
-                	'id'=>'collections_'.$label
+                	'id'=>'collections_'.$collection
             	)
     	)}}
-    	{{ Form::label('collections_moebel', $label) }}
+    	{{ Form::label('collections_moebel', $collection) }}
     </div>
     @endforeach
 @endisset
@@ -328,9 +328,9 @@
         <a href="#" class="accordion-title">Show additional Params</a>
         <div class="accordion-content" data-tab-content>
             <div class="cell small-12 parameter default" data-parameter-name="illustrations">
-			@if(isset($word->illustrations))
+			@if(isset($word['illustrations']))
                 <fieldset class="illustrations-result">
-			    @foreach ($word->illustrations as $illustration)
+			    @foreach ($word['illustrations'] as $illustration)
                     <div class="label-button-image">
                     {{ Form::radio(
                             'picture', 
@@ -363,7 +363,7 @@
                     </div>
                     {{ Form::number(
                             'importance', 
-                            (isset($word->importance)) ? $word->importance : '3', 
+                            (isset($word['addParams']['importance'])) ? $word['addParams']['importance'] : '3', 
                             [
                                 'class'=>'input-group-field number-field',
                                 'min'=>'1', 
@@ -384,7 +384,7 @@
                     </div>
                     {{ Form::number(
                             'complexity', 
-                            (isset($word->complexity)) ? $word->complexity : '3', 
+                            (isset($word['addParams']['complexity'])) ? $word['addParams']['complexity'] : '3', 
                             [
                                 'class'=>'input-group-field number-field',
                                 'min'=>'1', 
@@ -405,7 +405,7 @@
                     </div>
                     {{ Form::number(
                             'knowledge', 
-                            (isset($word->knowledge)) ? $word->knowledge : '3',  
+                            (isset($word['addParams']['knowledge'])) ? $word['addParams']['knowledge'] : '3',  
                             [
                                 'class'=>'input-group-field number-field',
                                 'min'=>'1', 
@@ -421,7 +421,7 @@
             <div class="cell small-12 parameter default" data-parameter-name="examples">
                 {{ Form::textarea(
                             'examples', 
-                            (isset($word->examples)) ? $word->examples : null, 
+                            (isset($word['addParams']['examples'])) ? $word['addParams']['examples'] : null, 
                             [
                                 'placeholder'=>'Using examples'
                             ]

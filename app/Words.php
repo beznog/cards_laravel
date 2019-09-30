@@ -10,14 +10,18 @@ class Words extends Model
 
     public function getInTextForm()
     {
+        
         return [
             'id' => $this->id,
             'morpheme' => $this->morphemes->morpheme,
             'translate' => $this->translates->pluck('translate')->all(),
             'wordType' => $this->wordTypes->word_type,
             'addParams' => $this->addParams->attributes,
-            'images' => $this->images->attributes,
+            'illustrations' => $this->images->all()
         ];
+        
+        //return json_decode(string($result));
+        //return $this->attributesToArray();
     }
 
     public function morphemes() {
@@ -34,5 +38,9 @@ class Words extends Model
 
     public function wordTypes() {
         return $this->belongsTo('App\WordTypes', 'word_type_id');
+    }
+
+    public function images() {
+        return $this->belongsToMany('App\Images', 'words_images', 'word_id', 'image_id');
     }
 }

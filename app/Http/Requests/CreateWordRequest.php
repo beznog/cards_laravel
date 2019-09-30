@@ -28,14 +28,14 @@ class CreateWordRequest extends FormRequest
             'morpheme' => [
                 'required_without:translate',
                 'nullable',
-                'regex:/^([a-zA-ZÜüÖöÄäß,()\s]*)$/',
+                'regex:/^([a-zA-ZÜüÖöÄäß,\-()\s]*)$/',
                 'max:100'
             ],
 
             'translate' => [
                 'required_without:morpheme',
                 'nullable',
-                'regex:/^([а-яА-ЯёЁ,()\s]*)$/u',
+                'regex:/^([а-яА-ЯёЁ,\-()\s]*)$/u',
                 'max:100'
             ],
 
@@ -60,7 +60,7 @@ class CreateWordRequest extends FormRequest
                 'boolean'
             ],
 
-            'preposition_verb' => [
+            'preposition' => [
                 'nullable',
                 Rule::in([
                     'Von+Dativ',

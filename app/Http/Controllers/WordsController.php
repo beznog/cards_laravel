@@ -66,8 +66,8 @@ class WordsController extends Controller
     public function autocompleteEditForm($wordId)
     {
         $word = EditWordService::getWordToFillForm($wordId);
-        $pictures = EditWordService::getPicturesToWord($word->morphemes['morpheme']);
-        return view('edit', compact('word', 'pictures'));
+        //$pictures = EditWordService::getPicturesToWord($word->morphemes['morpheme']);
+        return view('edit', compact('word'));
     }
 
     public function edit(CreateWordRequest $request) {
