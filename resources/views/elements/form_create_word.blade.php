@@ -11,7 +11,18 @@
 @endif
 
 
-{!! Form::open(['url' => '/add', 'id' => 'add_word', 'class' => 'grid-x', 'autocomplete' => 'off', 'name' => 'add_word', 'target' => '_blank']) !!}
+{{ Form::open(['url' => (empty($word)) ? '/add' : '/edit/'.$word['id'], 'id' => (empty($word)) ? 'add_word' : 'edit_word', 'class' => 'grid-x', 'autocomplete' => 'off', 'name' => (empty($word)) ? 'add_word' : 'edit_word']) }}
+
+
+@isset($word['id'])
+    {{ Form::hidden(
+            'word_id', 
+            $value = $word['id'], 
+            $attributes = array(
+                'id'=>'word_id_hidden'
+            )
+    )}}
+@endisset
 
 <div class="cell small-12 parameter default" data-parameter-name="word">
 {{ Form::text(
@@ -155,7 +166,7 @@
     {{ Form::checkbox(
             'reflexive', 
             '1',
-            (isset($word['addParams']['reflexive'])) ? true : false, 
+            (!empty($word['addParams']['reflexive'])) ? true : false, 
             $attributes = array(
                 'id'=>'reflexive'
             )
@@ -200,8 +211,8 @@
                 'In+Dativ' => 'In + Dativ',
                 'Als+Nominativ' => 'Als + Nominativ'
             ], 
-            (isset($word['addParams']['preposition'])) ? $word['addParams']['preposition'] : null,
-            (isset($word['addParams']['preposition'])) ? [] : ['placeholder' => 'Preposition']
+            (!empty($word['addParams']['preposition'])) ? $word['addParams']['preposition'] : null,
+            (!empty($word['addParams']['preposition'])) ? [] : ['placeholder' => 'Preposition']
     )}}
 </div>
 
@@ -293,12 +304,12 @@
     	{{ Form::checkbox(
         	    'collections[]', 
             	$collection,
-            	false, 
+            	true, 
             	$attributes = array(
                 	'id'=>'collections_'.$collection
             	)
     	)}}
-    	{{ Form::label('collections_moebel', $collection) }}
+    	{{ Form::label('collections_'.$collection, $collection) }}
     </div>
     @endforeach
 @endisset
@@ -328,22 +339,21 @@
         <a href="#" class="accordion-title">Show additional Params</a>
         <div class="accordion-content" data-tab-content>
             <div class="cell small-12 parameter default" data-parameter-name="illustrations">
-			@if(isset($word['illustrations']))
+			@if(!empty($word['images']))
                 <fieldset class="illustrations-result">
-			    @foreach ($word['illustrations'] as $illustration)
+			    @foreach ($word['images'] as $illustration)
                     <div class="label-button-image">
                     {{ Form::radio(
                             'picture', 
-                            $illustration->url,
-                            false, 
+                            '{"url":"'.$illustration['url'].'", "thumbnail_url":"'.$illustration['thumbnail_url'].'"}',
+                            (!empty($illustration['selected'])) ? true : false, 
                             $attributes = array(
-                                'id'=>'illustration-'.$loop->index,
-                                'data-thumbnail'=>$illustration->thumbnail
+                                'id'=>'illustration-'.$loop->index
                             )
                     )}}
                     <label for="illustration-{{ $loop->index }}">
                         <div class="thumbnail">
-                            <img src="{{ $illustration->thumbnail }}">
+                            <img src="{{ $illustration['thumbnail_url'] }}">
                         </div>
                     </label>
                     </div>

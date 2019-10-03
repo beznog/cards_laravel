@@ -20,7 +20,7 @@ class GoogleSearchAPI {
 
             $resultArr = array('status' => 200);
             foreach ($result['items'] as $value) {
-                $resultArr['content']['images'][] = array('imageUrl' => $value['link'], 'thumbnailUrl' => $value['image']['thumbnailLink']);
+                $resultArr['content']['images'][] = array('url' => $value['link'], 'thumbnail_url' => $value['image']['thumbnailLink']);
             }
             return $resultArr;
         }

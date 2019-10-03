@@ -29,7 +29,6 @@ class WordsController extends Controller
         //$words = Words::get();
         //$morphemes = Morphemes::get();
         $words = Words::with('morphemes', 'translates', 'wordTypes', 'addParams')->get();
-        //dd($words);
         return view('list', compact('words'));
     }
     /*
@@ -66,7 +65,6 @@ class WordsController extends Controller
     public function autocompleteEditForm($wordId)
     {
         $word = EditWordService::getWordToFillForm($wordId);
-        //$pictures = EditWordService::getPicturesToWord($word->morphemes['morpheme']);
         return view('edit', compact('word'));
     }
 

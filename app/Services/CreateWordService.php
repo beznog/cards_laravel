@@ -36,7 +36,6 @@ class CreateWordService
         $morpheme = Morphemes::find($morpheme);
         if (!empty($morpheme)) {
             $duplicateWords = $morpheme->words;
-            //dd($duplicateWords);
             $duplicateWordsInTextForm = array();
             foreach ($duplicateWords as $duplicateWord) {
                 // TODO !!!
@@ -44,6 +43,7 @@ class CreateWordService
             }
             return $duplicateWordsInTextForm;
         }
+
         return [];
     }
 
@@ -70,6 +70,15 @@ class CreateWordService
         if (!empty($params['word_type'])) {
             $wordType = WordTypes::where('word_type', $params['word_type'])->first();
             $wordType->words()->save($word);
+        }
+        
+        if (!empty($params['collections'])) {
+            $collectionsToSync = array();
+            foreach($params['collections'] as $key => &$value) {
+                $collection = Collections::add($value);
+                $collectionsToSync = Arr::add($collectionsToSync, $key, $collection->id);
+            }
+            $word->collections()->sync($collectionsToSync);
         }
 
         return ['result' => 'successfull'];

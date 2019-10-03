@@ -25,6 +25,12 @@ class CreateWordRequest extends FormRequest
     public function rules()
     {
         return [
+            'word_id' => [
+                'nullable',
+                'regex:/^([0-9]*)$/',
+                'max:20'
+            ],
+
             'morpheme' => [
                 'required_without:translate',
                 'nullable',
@@ -111,12 +117,12 @@ class CreateWordRequest extends FormRequest
                 'max:100'
             ],
 
-            'labels' => [
+            'collections' => [
                 'nullable',
                 'array'
             ],
 
-            'labels.*' => [
+            'collections.*' => [
                 'nullable',
                 'distinct',
                 'regex:/^([a-zA-ZÜüÖöÄäßа-яА-ЯёЁ0-9,()\s]*)$/',
@@ -126,8 +132,10 @@ class CreateWordRequest extends FormRequest
             'picture' => [
                 'nullable',
                 //'url',
-                'regex:/^(http)(s?)(:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
-                'max:200'
+                //'regex:/^(http)(s?)(:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+                //'url'   => ['regex' => '/^((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)$/'],
+                'json',
+                'max:400'
             ],
 
             'importance' => [

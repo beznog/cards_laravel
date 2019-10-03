@@ -60,7 +60,8 @@
                     @isset($word->addParams['knowledge'])
                         knowledge: {{ $word->addParams['knowledge'] }}
                     @endisset
-
+                    <br>
+                    {{ link_to_action('WordsController@autocompleteEditForm', 'edit', $parameters = array($word->id), $attributes = array('target' => '_blank')) }}
                     <br>
                     <br>            
                 </li>

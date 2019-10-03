@@ -10,18 +10,21 @@ class Words extends Model
 
     public function getInTextForm()
     {
-        
         return [
             'id' => $this->id,
-            'morpheme' => $this->morphemes->morpheme,
-            'translate' => $this->translates->pluck('translate')->all(),
-            'wordType' => $this->wordTypes->word_type,
-            'addParams' => $this->addParams->attributes,
-            'illustrations' => $this->images->all()
+            'morpheme' => (!empty($this->morphemes->morpheme)) ? $this->morphemes->morpheme : null,
+            'translate' => (!empty($this->translates->pluck('translate')->all())) ? $this->translates->pluck('translate')->all() : null,
+            'wordType' => (!empty($this->wordTypes->word_type)) ? $this->wordTypes->word_type : null,
+            'addParams' => (!empty($this->addParams->attributes)) ? $this->addParams->attributes : null,
+            'collections' => (!empty($this->collections->pluck('collection')->all())) ? $this->collections->pluck('collection')->all() : null,
+            'images' => (!empty($this->images->first())) ? array(
+                array(
+                    'selected' => true,
+                    'url' => $this->images->first()['url'],
+                    'thumbnail_url' => $this->images->first()['thumbnail_url']
+                )
+            ) : null
         ];
-        
-        //return json_decode(string($result));
-        //return $this->attributesToArray();
     }
 
     public function morphemes() {
@@ -42,5 +45,9 @@ class Words extends Model
 
     public function images() {
         return $this->belongsToMany('App\Images', 'words_images', 'word_id', 'image_id');
+    }
+
+    public function collections() {
+        return $this->belongsToMany('App\Collections', 'words_collections', 'word_id', 'collection_id');
     }
 }
