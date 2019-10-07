@@ -23,7 +23,8 @@ class GetWordsService
     {
         $validatedData = self::validate($request);
         //dd($validatedData);
-        return $validatedData;
+        return view('cards');
+        //return $validatedData;
     }
 
     public static function validate(GetWordsRequest $request)
