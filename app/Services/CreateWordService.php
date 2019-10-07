@@ -3,12 +3,15 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 use App\Words;
 use App\Morphemes;
 use App\Translates;
 use App\AddParams;
 use App\WordTypes;
+use App\Images;
+use App\Collections;
 
 use App\Http\Requests\CreateWordRequest;
 
@@ -79,6 +82,11 @@ class CreateWordService
                 $collectionsToSync = Arr::add($collectionsToSync, $key, $collection->id);
             }
             $word->collections()->sync($collectionsToSync);
+        }
+
+        if (!empty($params['picture'])) {
+            $picture = Images::add(json_decode($params['picture']));
+            $word->images()->sync($picture->id);
         }
 
         return ['result' => 'successfull'];

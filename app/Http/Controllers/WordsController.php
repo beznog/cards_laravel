@@ -9,53 +9,30 @@ use App\Morphemes;
 use App\Translates;
 use App\AddParams;
 use App\WordTypes;
-
-
+use App\Collections;
 
 use App\Services\CreateWordService;
 use App\Services\EditWordService;
+use App\Services\DeleteWordService;
+use App\Services\GetWordsService;
 
 use App\Http\Requests\CreateWordRequest;
+use App\Http\Requests\GetWordsRequest;
+
+use Illuminate\Database\Eloquent\Builder;
 
 class WordsController extends Controller
 {
     public function index()
     {
-        return view('main');
+        return view('add');
     }
 
     public function list()
     {
-        //$words = Words::get();
-        //$morphemes = Morphemes::get();
-        $words = Words::with('morphemes', 'translates', 'wordTypes', 'addParams')->get();
+        $words = Words::with('morphemes', 'translates', 'wordTypes', 'addParams', 'collections', 'images')->get();
         return view('list', compact('words'));
     }
-    /*
-    public function translate($word)
-    {
-        $word = Words::where('word', $word)->get()->first();
-        $translates = $word->translates;
-        dd($translates);
-        return view('list', compact('words'));
-    }
-    */
-    /*
-    public function addTranslate($word, $translate)
-    {
-        $word = Words::where('word', $word)->get()->first();
-
-        $translate = new Translates(['translate' => $translate]);
-
-
-        $word->translates()->save($translate);
-
-        //$word->translates()->Translates::firstOrCreate(array('translate' => $translate));
-        //$translates = $word->translates;
-        //dd($translates);
-        //return view('list', compact('words'));
-    }
-    */
 
     public function store(CreateWordRequest $request)
     {
@@ -70,5 +47,29 @@ class WordsController extends Controller
 
     public function edit(CreateWordRequest $request) {
         return EditWordService::edit($request);
+    }
+
+    public function delete($wordId) {
+        return DeleteWordService::softDelete($wordId);
+    }
+
+    public function getAllCollections() {
+        return EditWordService::getCollections();
+    }
+
+    public function getWordsByCollections(GetWordsRequest $request) {
+        return GetWordsService::retrieve($request);
+
+        //dump($request);
+        //$request->validated();
+
+
+        //$collectionsIds = Collections::with('words')->whereIn('collection', ['wohnung', 'möbel'])->pluck('id')->all();
+
+        //$words = Words::whereHas('collections', function (Builder $query) use ($collectionsIds) {
+        //    $query->whereIn('collection_id', $collectionsIds);
+        //})->skip(2)->take(5)->get();
+
+        //return $words;
     }
 }

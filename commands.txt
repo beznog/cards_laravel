@@ -5,4 +5,15 @@ composer require symfony/psr-http-message-bridge
 php artisan migrate:refresh
 php artisan serve
 
-php artisan make:provider APIServiceProvider 
+php artisan make:provider APIServiceProvider
+
+
+php artisan make:migration add_soft_delete_to_words_table --table="words"
+php artisan migrate
+
+
+php artisan make:request UserStoreRequest
+
+
+lsof -i :8000
+sudo kill -9 [PID]

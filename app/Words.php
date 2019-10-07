@@ -3,10 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Words extends Model
 {
+    use SoftDeletes;
+
 	protected $table = 'words';
+
+    protected $dates = ['deleted_at'];
 
     public function getInTextForm()
     {

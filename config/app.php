@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Words Cards'),
 
     /*
     |--------------------------------------------------------------------------
@@ -231,6 +231,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'LingvoAPI' => App\Helpers\APIHelpers\LingvoAPI::class,
         'GoogleSearchAPI' => App\Helpers\APIHelpers\GoogleSearchAPI::class,
+        '_Arr' => App\Helpers\_Arr::class,
 
     ],
 

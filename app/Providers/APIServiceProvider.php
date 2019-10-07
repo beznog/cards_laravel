@@ -15,6 +15,7 @@ class APIServiceProvider extends ServiceProvider
     {
         require_once app_path() . '/Helpers/APIHelpers/LingvoAPI.php';
         require_once app_path() . '/Helpers/APIHelpers/GoogleSearchAPI.php';
+        require_once app_path() . '/Helpers/_Arr.php';
     }
 
     /**

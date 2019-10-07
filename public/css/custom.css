@@ -1,0 +1,49 @@
+.content {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 1.5rem;
+}
+
+.top-bar .top-bar-left,
+.top-bar .top-bar-right {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+}
+
+.top-bar-left a {
+    line-height: 1;
+    text-decoration: none;
+    display: block;
+    padding: 0.7rem 0rem;
+}
+
+.menu .menu-text {
+    padding: 0.7rem 0.1rem;
+}
+
+.parameter {
+    float: left;
+}
+
+.label-button,
+.label-button-image {
+    float: left;
+}
+
+.counter input[type="number"] {
+    text-align: center;
+}
+
+.accordion-content {
+    float: left;
+    width: 100%;
+}
+
+.accordion-title {
+    display: block;
+    float: left;
+    width: 100%;
+    font-size: 1rem;
+    text-align: center;
+}

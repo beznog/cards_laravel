@@ -29,11 +29,14 @@ class EditWordService
     public static function getWordToFillForm($wordId)
     {
         $word = Words::where('id', $wordId)->get()->first()->getInTextForm();
-        //$illustrations = self::getPicturesToWord($word['morpheme']);
-        //$illustrations = Arr::where($illustrations, function ($value, $key) use ($word) {
-        //    return $word['images'][0]['url']!=$value['url'];
-        //});
-        //$word['images'] = array_merge($word['images'], $illustrations);
+        $illustrations = self::getPicturesToWord($word['morpheme']);
+        $illustrations = Arr::where($illustrations, function ($value, $key) use ($word) {
+            return $word['images'][0]['url']!=$value['url'];
+        });
+        if(empty($word['images'])) {
+            $word['images'] = array();
+        }
+        $word['images'] = array_merge($word['images'], $illustrations);
         return $word;
     }
 
@@ -98,10 +101,21 @@ class EditWordService
 
         if (!empty($params['picture'])) {
             $picture = Images::add(json_decode($params['picture']));
-            $picture->words()->save($word);
+            $word->images()->sync($picture->id);
         }
 
         return ['result' => 'successfull'];
+    }
+
+    public static function getCollections()
+    {
+        $collections = Collections::all()->pluck('collection')->all();
+        if(!empty($collections)) {
+            return $collections;
+        }
+        else {
+            return null;
+        }
     }
 
 }

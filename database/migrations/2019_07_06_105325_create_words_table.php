@@ -28,6 +28,8 @@ class CreateWordsTable extends Migration
             $table->foreign('morpheme_id')
               ->references('id')->on('morphemes')
               ->onDelete('cascade');
+
+            $table->softDeletes();
         });
 
 

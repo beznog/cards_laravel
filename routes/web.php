@@ -24,13 +24,21 @@ Route::post('add',
 
 Route::get('edit/{wordId}', 'WordsController@autocompleteEditForm');
 Route::post('edit/{wordId}', 'WordsController@edit');
-//Route::get('/translate/{word}','WordsController@translate');
-//Route::get('/add_translate/{word}/{translate}','WordsController@addTranslate');
+
+Route::get('delete/{wordId}', 'WordsController@delete');
 
 Route::get('api_services/lingvo/get_full_words/{word}', function ($word) {
     return LingvoAPI::getFullWords($word, 1031, 1049, 10, LingvoAPI::getToken());
 });
 
-Route::get('api_services/google_search/{word}', function ($word) {
+Route::get('api_services/lingvo/get_word_card/{word}', function ($word) {
+    return LingvoAPI::getWordCard($word, 1031, LingvoAPI::getToken());
+});
+
+Route::get('api_services/google_search/get_pictures/{word}', function ($word) {
     return GoogleSearchAPI::getPictures($word, 4, GoogleSearchAPI::$serverKey, GoogleSearchAPI::$searchId);
 });
+
+Route::get('get_all_collections', 'WordsController@getAllCollections');
+
+Route::get('get_words', 'WordsController@getWordsByCollections');

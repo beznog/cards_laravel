@@ -67,7 +67,7 @@
                 (isset($word['wordType']) && $word['wordType'] == 'verb') ? true : false, 
                 $attributes = array(
                     'id'=>'word_type_verb', 
-                    'data-next-params'=>'article_type' 
+                    'data-next-params'=>'reflexive preposition_verb preposition modal_verb regularity' 
                 )
         )}}
         {{ Form::label('word_type_verb', 'Verb') }}
@@ -98,7 +98,7 @@
     </div>
 </fieldset>
 
-<fieldset class="cell small-12 parameter hide" data-parameter-name="article_type">
+<fieldset class="cell small-12 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'noun') ? '' : 'hide' }}" data-parameter-name="article_type">
     <div class="label-button">
         {{ Form::radio(
                 'article_type', 
@@ -149,7 +149,7 @@
     </div>   
 </fieldset>
 
-<div class="cell small-12 parameter hide" data-parameter-name="plural">
+<div class="cell small-12 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'noun') ? '' : 'hide' }}" data-parameter-name="plural">
 {{ Form::text(
         'plural', 
         $value = (isset($word['addParams']['plural'])) ? $word['addParams']['plural'] : '', 
@@ -161,7 +161,7 @@
 )}}
 </div>
 
-<div class="cell small-6 parameter hide" data-parameter-name="reflexive">
+<div class="cell small-6 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'verb') ? '' : 'hide' }}" data-parameter-name="reflexive">
     <div class="label-button">
     {{ Form::checkbox(
             'reflexive', 
@@ -175,7 +175,7 @@
     </div>
 </div>
 
-<div class="cell small-6 parameter hide" data-parameter-name="preposition_verb">
+<div class="cell small-6 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'verb') ? '' : 'hide' }}" data-parameter-name="preposition_verb">
     <div class="label-button">
     {{ Form::checkbox(
             'preposition_verb', 
@@ -190,7 +190,7 @@
     </div>
 </div>
 
-<div class="cell small-12 parameter hide" data-parameter-name="preposition">
+<div class="cell small-12 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'verb') ? '' : 'hide' }}" data-parameter-name="preposition">
     {{ Form::select(
             'preposition', 
             [
@@ -216,7 +216,7 @@
     )}}
 </div>
 
-<fieldset class="cell small-12 parameter hide" data-parameter-name="modal_verb">
+<fieldset class="cell small-12 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'verb') ? '' : 'hide' }}" data-parameter-name="modal_verb">
     <div class="label-button">
     {{ Form::radio(
             'modal_verb', 
@@ -241,7 +241,7 @@
     </div>
 </fieldset>
 
-<fieldset class="cell small-12 parameter hide" data-parameter-name="regularity">
+<fieldset class="cell small-12 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'verb') ? '' : 'hide' }}" data-parameter-name="regularity">
     <div class="label-button">
     {{ Form::radio(
             'regularity', 
@@ -267,7 +267,7 @@
     </div>
 </fieldset>
 
-<fieldset class="cell small-12 parameter hide" data-parameter-name="irregurality_forms">
+<fieldset class="cell small-12 parameter {{ (isset($word['wordType']) && $word['wordType'] == 'verb') ? '' : 'hide' }}" data-parameter-name="irregurality_forms">
     <div class="cell small-12">
     {{ Form::text(
             'prasens', 
@@ -297,7 +297,7 @@
     </div>
 </fieldset>
 
-<div class="cell small-6 parameter hide" data-parameter-name="collections">
+<div class="cell small-6 parameter" data-parameter-name="collections">
 @isset($word['collections'])
     @foreach ($word['collections'] as $collection)
     	<div class="label-button">
@@ -335,12 +335,12 @@
             </div>
         </div>
     </li>
-    <li class="accordion-item" data-accordion-item>
+    <li class="accordion-item {{ (!empty($word['images']) || !empty($word['addParams']['importance']) || !empty($word['addParams']['complexity']) || !empty($word['addParams']['knowledge']) || !empty($word['addParams']['examples'])) ? 'is-active' : '' }}" data-accordion-item>
         <a href="#" class="accordion-title">Show additional Params</a>
         <div class="accordion-content" data-tab-content>
             <div class="cell small-12 parameter default" data-parameter-name="illustrations">
-			@if(!empty($word['images']))
                 <fieldset class="illustrations-result">
+                @if(!empty($word['images']))
 			    @foreach ($word['images'] as $illustration)
                     <div class="label-button-image">
                     {{ Form::radio(
@@ -357,13 +357,12 @@
                         </div>
                     </label>
                     </div>
-			    @endforeach                	
+			    @endforeach
+                @endif                	
                 </fieldset>
-			@else
                 <div class="illustrations-noresult">
                     <h3>No images</h3>
                 </div>
-            @endif
             </div>
             <div class="cell small-12 parameter default" data-parameter-name="importance">
                 <div class="input-group counter">

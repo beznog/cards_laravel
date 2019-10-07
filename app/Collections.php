@@ -14,6 +14,6 @@ class Collections extends Model
     }
 
     public function words() {
-        return $this->belongsToMany('App\Collections', 'words_collections', 'word_id', 'collection_id');
+        return $this->belongsToMany('App\Words', 'words_collections', 'collection_id', 'word_id');
     }
 }
