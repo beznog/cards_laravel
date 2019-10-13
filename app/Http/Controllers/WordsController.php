@@ -59,17 +59,5 @@ class WordsController extends Controller
 
     public function getWordsByCollections(GetWordsRequest $request) {
         return GetWordsService::retrieve($request);
-
-        //dump($request);
-        //$request->validated();
-
-
-        //$collectionsIds = Collections::with('words')->whereIn('collection', ['wohnung', 'möbel'])->pluck('id')->all();
-
-        //$words = Words::whereHas('collections', function (Builder $query) use ($collectionsIds) {
-        //    $query->whereIn('collection_id', $collectionsIds);
-        //})->skip(2)->take(5)->get();
-
-        //return $words;
     }
 }

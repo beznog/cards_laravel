@@ -11,4 +11,21 @@
 	        </div>
 	    </div>
 	@endif
+
+<div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
+  <div class="orbit-wrapper">
+    <div class="orbit-controls">
+      <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
+      <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+    </div>
+    <ul class="orbit-container">
+        @foreach ($cards as $card)
+          <li class="orbit-slide @if ($loop->first) is-active @endif">
+              {{-- $card['id'] --}}
+              @include('elements.word_card')
+          </li>
+        @endforeach
+    </ul>
+  </div>
+</div>
 @endsection
