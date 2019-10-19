@@ -16,6 +16,7 @@ use App\Collections;
 use App\Http\Requests\GetWordsRequest;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 
 
@@ -23,22 +24,23 @@ class GetWordsService
 {
     public static function retrieve(GetWordsRequest $request)
     {
-        $validatedData = self::validate($request);
 
-        //dd($validatedData);
-        $limit = (!empty($validatedData->limit)) ? $validatedData->limit: null;
-        $offset = (!empty($validatedData->offset)) ? $validatedData->offset: 0;
+        $validatedData = self::validate($request);
+        $limit = (!empty($validatedData['limit'])) ? $validatedData['limit'] : 10;
+        $offset = (!empty($validatedData['offset'])) ? $validatedData['offset'] : 0;
 
         if(!empty($collections = $validatedData['collections'])) {
-            $collectionsIds = Collections::with('words')->whereIn('collection', $collections)->pluck('id')->all();
 
+            $collectionsIds = Collections::with('words')->whereIn('collection', $collections)->pluck('id')->all();
+            
             $words = Words::whereHas('collections', function (Builder $query) use ($collectionsIds) {
                 $query->whereIn('collection_id', $collectionsIds);
-            })->skip(2)->take(5)->get();
+            })->skip($offset)->take($limit)->get();
         }
         else {
             $words = Words::all()->take($limit);
         }
+
         
         $cards = self::formatWordsToCards($words);
         

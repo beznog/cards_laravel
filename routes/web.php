@@ -42,3 +42,4 @@ Route::get('api_services/google_search/get_pictures/{word}', function ($word) {
 Route::get('get_all_collections', 'WordsController@getAllCollections');
 
 Route::get('get_words', 'WordsController@getWordsByCollections');
+// http://localhost:8000/get_words?collections[]=möbel&collections[]=wohnung&limit=20&offset=2
